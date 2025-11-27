@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Alice",
+    "profile": {
+      "age": 30,
+      "city": "New York"
+    },
+    "hobbies": ["reading", "cycling"]
+  },
+  {
+    "id": 2,
+    "name": "Bob",
+    "profile": {
+      "age": 25,
+      "city": "London"
+    },
+    "hobbies": ["gaming", "cooking", "travel"]
+  }
+]
