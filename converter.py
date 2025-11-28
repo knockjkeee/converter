@@ -3,25 +3,35 @@ import json
 import argparse
 import sys
 
+from zabbix import ZabbixParser
+
+
 def flatten_and_convert_lists(obj):
   """Рекурсивно не нужен — обработка списков на уровне DataFrame."""
   return obj
 
 def main():
   parser = argparse.ArgumentParser(description="Преобразует JSON-файл в CSV с расплющиванием вложенных структур.")
-  parser.add_argument('input_file', help='Путь к входному JSON-файлу')
-  parser.add_argument('output_file', help='Путь к выходному CSV-файлу')
+  parser.add_argument('-in','--input_file', help='Путь к входному JSON-файлу')
+  parser.add_argument('-out','--output_file', help='Путь к выходному CSV-файлу', default='output.csv')
+  parser.add_argument("-zab", "--zabbix", help='Обработка zabbix', default='false')
   args = parser.parse_args()
+
+
+  if args.zabbix != 'false':
+    zabbix = ZabbixParser(args.input_file)
+    zabbix.load().export_all()
+    return
 
   try:
     # Чтение JSON из файла
     with open(args.input_file, 'r', encoding='utf-8') as f:
       data = json.load(f)
 
-    # Проверка: ожидаем список словарей (массив объектов)
-    if not isinstance(data, list):
-      print("Ошибка: JSON должен содержать массив объектов (список словарей).", file=sys.stderr)
-      sys.exit(1)
+    # # Проверка: ожидаем список словарей (массив объектов)
+    # if not isinstance(data, list):
+    #   print("Ошибка: JSON должен содержать массив объектов (список словарей).", file=sys.stderr)
+    #   sys.exit(1)
 
     # Разглаживание вложенных структур
     df = pd.json_normalize(data, sep='_')

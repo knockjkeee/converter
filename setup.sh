@@ -39,11 +39,16 @@ echo "🛠️ Запуск PyInstaller ./dist/converter/converter [input.json] [
 
 echo "✅ Сборка завершена! Исполняемый файл находится в dist/converter/"
 
-echo "🛠️ Пример запуска ./dist/converter/converter nested.json output.csv"
-echo "nested.json:"
+echo "Тест сборки файла nested.json:"
 cat nested.json
-echo "Process......"
-./dist/converter/converter nested.json output.csv
-echo "output.csv:"
+
+echo ""
+echo "Process..."
+
+./dist/converter/converter -in=nested.json
+echo ""
+echo "Результат output.csv:"
 cat output.csv
-echo "✅ DONE"
+
+
+echo "✅ ГОТОВО"
